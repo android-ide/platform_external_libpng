@@ -38,23 +38,6 @@ common_C_INCLUDES +=
 common_COPY_HEADERS_TO := libpng
 common_COPY_HEADERS := png.h pngconf.h pngusr.h
 
-# For the host
-# =====================================================
-
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := $(common_SRC_FILES)
-LOCAL_CFLAGS += $(common_CFLAGS)
-LOCAL_C_INCLUDES += $(common_C_INCLUDES) external/zlib
-
-LOCAL_MODULE:= libpng
-
-LOCAL_COPY_HEADERS_TO := $(common_COPY_HEADERS_TO)
-LOCAL_COPY_HEADERS := $(common_COPY_HEADERS)
-
-include $(BUILD_HOST_STATIC_LIBRARY)
-
-
 # For the device
 # =====================================================
 
