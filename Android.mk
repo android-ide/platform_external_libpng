@@ -57,6 +57,10 @@ common_C_INCLUDES +=
 common_COPY_HEADERS_TO := libpng
 common_COPY_HEADERS := png.h pngconf.h pngusr.h
 
+
+ifndef AIDE_BUILD
+
+
 # For the host
 # =====================================================
 
@@ -75,6 +79,9 @@ LOCAL_COPY_HEADERS := $(common_COPY_HEADERS)
 include $(BUILD_HOST_STATIC_LIBRARY)
 
 
+endif # AIDE_BUILD
+
+
 # For the device (static)
 # =====================================================
 
@@ -90,12 +97,22 @@ LOCAL_SRC_FILES_arm64 := $(my_src_files_arm)
 
 LOCAL_C_INCLUDES += $(common_C_INCLUDES) \
 	external/zlib
+
+ifdef AIDE_BUILD
+LOCAL_STATIC_LIBRARIES := \
+	libz
+else
 LOCAL_SHARED_LIBRARIES := \
 	libz
+endif
 
 LOCAL_MODULE:= libpng
 
 include $(BUILD_STATIC_LIBRARY)
+
+
+ifndef AIDE_BUILD
+ 
 
 # For the device (shared)
 # =====================================================
@@ -133,3 +150,6 @@ LOCAL_MODULE := pngtest
 LOCAL_SHARED_LIBRARIES:= libpng libz
 LOCAL_MODULE_TAGS := debug
 include $(BUILD_EXECUTABLE)
+
+
+endif # AIDE_BUILD
