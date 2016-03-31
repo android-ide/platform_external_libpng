@@ -34,6 +34,10 @@ my_src_files_arm := \
 
 common_CFLAGS := -std=gnu89 #-fvisibility=hidden ## -fomit-frame-pointer
 
+
+ifndef AIDE_BUILD
+
+
 # For the host
 # =====================================================
 
@@ -46,6 +50,9 @@ LOCAL_STATIC_LIBRARIES := libz
 LOCAL_MODULE:= libpng
 LOCAL_MODULE_HOST_OS := darwin linux windows
 include $(BUILD_HOST_STATIC_LIBRARY)
+
+
+endif # AIDE_BUILD
 
 
 # For the device (static) for NDK
@@ -63,9 +70,13 @@ LOCAL_SRC_FILES_arm64 := $(my_src_files_arm)
 LOCAL_SANITIZE := never
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)
 LOCAL_SHARED_LIBRARIES := libz
-LOCAL_MODULE:= libpng_ndk
+LOCAL_MODULE:= libpng
 LOCAL_SDK_VERSION := 14
 include $(BUILD_STATIC_LIBRARY)
+
+
+ifndef AIDE_BUILD
+
 
 # For the device (static) for platform (retains fortify support)
 # =====================================================
@@ -84,6 +95,7 @@ LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)
 LOCAL_SHARED_LIBRARIES := libz
 LOCAL_MODULE:= libpng
 include $(BUILD_STATIC_LIBRARY)
+
 
 # For the device (shared)
 # =====================================================
@@ -112,3 +124,6 @@ LOCAL_MODULE := pngtest
 LOCAL_SHARED_LIBRARIES:= libpng libz
 LOCAL_MODULE_TAGS := debug
 include $(BUILD_EXECUTABLE)
+
+
+endif # AIDE_BUILD
